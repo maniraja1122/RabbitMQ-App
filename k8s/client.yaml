@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-client
+  labels:
+    app: rabbitmq-client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rabbitmq-client
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-client
+    spec:
+      containers:
+        - name: client
+          image: maniraja1122/rabbitmq-client:latest
+          env:
+            - name: USER_RM
+              value: default_user_Pmg_klue667IB8nzCvx
+            - name: PASSWORD_RM
+              value: Tszs3oAO315VPHuNftJYmrumkOVVh590
+            - name: SVC_RM
+              value: "10.100.8.200"
+          ports:
+            - containerPort: 8080
+              name: http-web-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rm-client-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: rabbitmq-client
+  ports:
+    - name: client-port
+      protocol: TCP
+      port: 8080
+      targetPort: http-web-svc

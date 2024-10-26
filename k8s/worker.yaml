@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-worker
+  labels:
+    app: rabbitmq-worker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rabbitmq-worker
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-worker
+    spec:
+      containers:
+        - name: worker
+          image: maniraja1122/rabbitmq-worker:latest
+          env:
+            - name: USER_RM
+              value: default_user_Pmg_klue667IB8nzCvx
+            - name: PASSWORD_RM
+              value: Tszs3oAO315VPHuNftJYmrumkOVVh590
+            - name: SVC_RM
+              value: "10.100.8.200"
+          ports:
+            - containerPort: 8080
+              name: http-web-svc

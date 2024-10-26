@@ -23,7 +23,18 @@ func main() {
 		log.Println(err)
 	}
 	defer channel.Close()
-
+	// Declare the queue before consuming
+	_, err = channel.QueueDeclare(
+		"TestQueue",
+		true,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		log.Println(err)
+	}
 	// Start receiving queued messages.
 	messages, err := channel.Consume(
 		"TestQueue",
