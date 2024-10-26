@@ -6,7 +6,6 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    environment: DOCKERHUB_AUTH
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
